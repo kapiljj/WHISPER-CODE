@@ -1,0 +1,22 @@
+import openai
+import time
+
+openai.api_key = "MY API
+    retries = 5  
+    delay = 10  
+    
+    for attempt in range(retries):
+        try:
+            audio_file = open(file_path, "rb")
+            response = openai.Audio.transcribe("whisper-1", audio_file)
+            print(response) 
+            return  
+        except openai.error.RateLimitError:
+            print(f"Rate limit exceeded. Retrying after {delay} seconds... (Attempt {attempt + 1} of {retries})")
+            time.sleep(delay) 
+            delay *= 2  
+        except FileNotFoundError:
+            print(f"File not found: {file_path}. Please check the file path.")
+            break
+
+transcribe_audio("C:/Users/Kapil/Desktop/audiowhisper/98.wav") 
